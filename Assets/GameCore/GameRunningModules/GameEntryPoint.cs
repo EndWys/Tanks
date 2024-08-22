@@ -1,20 +1,30 @@
+using Assets.GameCore.GameInputSystem;
+using Assets.GameCore.GamePlayModules;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-public class GameEntryPoint : IStartable
+namespace Assets.GameCore.GameRunningModules
 {
-    private PlayerTankControlInput _playerInput;
-
-    [Inject]
-    public GameEntryPoint(PlayerTankControlInput playerInput)
+    public class GameEntryPoint : IStartable
     {
-        _playerInput = playerInput;
-    }
+        private TankMovement _playerTank;
+        private PlayerTankControlInput _playerInput;
+
+        [Inject]
+        public GameEntryPoint(PlayerTankControlInput playerInput, TankMovement playerTank)
+        {
+            _playerInput = playerInput;
+            _playerTank = playerTank;
+        }
 
 
-    public void Start()
-    {
-        Debug.Log("Start");
+        public void Start()
+        {
+            _playerInput.Init();
+            _playerTank.Init();
+
+            Debug.Log("Start");
+        }
     }
 }

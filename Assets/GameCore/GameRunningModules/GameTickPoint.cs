@@ -2,18 +2,21 @@ using System;
 using UnityEngine;
 using VContainer.Unity;
 
-public interface IGameTicker
+namespace Assets.GameCore.GameRunningModules
 {
-    public event Action OnTick;
-}
-
-public class GameTickPoint : ITickable, IGameTicker
-{
-    public event Action OnTick = delegate { };
-
-    public void Tick()
+    public interface IGameTicker
     {
-        OnTick.Invoke();
-        Debug.Log("Tick");
+        public event Action OnTick;
+    }
+
+    public class GameTickPoint : ITickable, IGameTicker
+    {
+        public event Action OnTick = delegate { };
+
+        public void Tick()
+        {
+            OnTick.Invoke();
+            Debug.Log("Tick");
+        }
     }
 }

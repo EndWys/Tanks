@@ -1,13 +1,23 @@
+using Assets.GameCore.GameInputSystem;
+using Assets.GameCore.GamePlayModules;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-public class GameLifeTimeScope : LifetimeScope
+namespace Assets.GameCore.GameRunningModules
 {
-    protected override void Configure(IContainerBuilder builder)
+    public class GameLifeTimeScope : LifetimeScope
     {
-        builder.Register<PlayerTankControlInput>(Lifetime.Singleton);
+        [SerializeField] private TankMovement _playerTank;
 
-        builder.RegisterEntryPoint<GameTickPoint>();
-        builder.RegisterEntryPoint<GameEntryPoint>();
+        protected override void Configure(IContainerBuilder builder)
+        {
+            builder.Register<PlayerTankControlInput>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+
+            builder.RegisterComponent(_playerTank);
+
+            builder.RegisterEntryPoint<GameTickPoint>();
+            builder.RegisterEntryPoint<GameEntryPoint>();
+        }
     }
 }
