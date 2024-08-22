@@ -9,9 +9,11 @@ using VContainer;
 
 namespace Assets.GameCore.GamePlayModules
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class TankMovement : CachedMonoBehaviour
     {
         [SerializeField] private PlayerMovementSettings _playerMovementSettings;
+
 
         private IInputSender _input;
 

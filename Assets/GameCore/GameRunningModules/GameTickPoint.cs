@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets.GameCore.GameRunningModules
@@ -16,7 +15,6 @@ namespace Assets.GameCore.GameRunningModules
         public void Tick()
         {
             OnTick.Invoke();
-            Debug.Log("Tick");
         }
     }
 }
