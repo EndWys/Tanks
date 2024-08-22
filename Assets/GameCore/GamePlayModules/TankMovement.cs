@@ -1,5 +1,6 @@
 using Assets.CodeUtilities;
 using Assets.GameCore.GameInputSystem;
+using Assets.GameCore.GamePlayModules.PlayerLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Assets.GameCore.GamePlayModules
 {
     public class TankMovement : CachedMonoBehaviour
     {
+        [SerializeField] private PlayerMovementSettings _playerMovementSettings;
+
         private IInputSender _input;
 
         private Dictionary<ControllAction, Action> _tankMoves;
@@ -34,22 +37,26 @@ namespace Assets.GameCore.GamePlayModules
 
         private void MoveForward()
         {
-            CachedTransform.position += Vector3.up * Time.deltaTime * 20;
+            Vector3 direction = CachedTransform.TransformDirection(Vector3.up);
+
+            CachedTransform.position += direction * Time.deltaTime * _playerMovementSettings.MoveSpeed;
         }
 
         private void MoveBack()
         {
-            CachedTransform.position += Vector3.down * Time.deltaTime * 20;
+            Vector3 direction = CachedTransform.TransformDirection(Vector3.down);
+
+            CachedTransform.position += direction * Time.deltaTime * _playerMovementSettings.MoveSpeed;
         }
 
         private void RotateLeft()
         {
-            CachedTransform.Rotate(Vector3.forward * Time.deltaTime * 20);
+            CachedTransform.Rotate(Vector3.forward * Time.deltaTime * _playerMovementSettings.RotateSpeed);
         }
 
         private void RotateRight()
         {
-            CachedTransform.Rotate(Vector3.back * Time.deltaTime * 20);
+            CachedTransform.Rotate(Vector3.back * Time.deltaTime * _playerMovementSettings.RotateSpeed);
         }
 
         private IEnumerable<KeyValuePair<ControllAction, Action>> BuildTankMovesMap()

@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1210682844}
   - component: {fileID: 1210682848}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Tank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,6 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa1a7bb80d769049840472a609afec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerMovementSettings: {fileID: 11400000, guid: ed617aba54ed21a4a887a07ef13abc82, type: 2}
 --- !u!1 &2063279227
 GameObject:
   m_ObjectHideFlags: 0
