@@ -2,65 +2,42 @@ using Assets.CodeUtilities;
 using Assets.GameCore.GameInputSystem;
 using Assets.GameCore.GameRunningModules;
 using System;
-using System.Collections;
-using UnityEngine;
-using VContainer;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
     public interface IAIInputSender : IInputSender { }
+    public interface IAIActionCaller
+    {
+        void CallAIAction(ControllAction actionType);
+    }
 
-    public class EnemyAIController : CachedMonoBehaviour, IAIInputSender
+    public class EnemyAIController : CachedMonoBehaviour, IAIInputSender, IAIActionCaller
     {
         public event Action<ControllAction> InputAction = delegate (ControllAction action) { };
 
         private IGameTicker _ticker;
 
+        private EnemyTankMovementStateMachine _stateMachine;
+
         public void Init(IGameTicker ticker)
         {
             _ticker = ticker;
 
-            _ticker.OnTick += EveryTickAction;
+            _stateMachine = new(this);
 
-            StartCoroutine(ChooseRandomAction());
+            _stateMachine.Init();
+
+            _ticker.OnTick += EveryTickAction;
         }
 
         private void EveryTickAction()
         {
-            //State machine functional that call actions
-
-            if (_rotate)
-            {
-                InputAction.Invoke(ControllAction.RotateLeft);
-            }
-
-            if(_moving)
-            {
-                InputAction.Invoke(ControllAction.MoveForward);
-            }
+            _stateMachine.OnStateActive();
         }
 
-        //ONLY TEST
-
-        private bool _rotate;
-        private bool _moving;
-        private IEnumerator ChooseRandomAction()
+        public void CallAIAction(ControllAction actionType)
         {
-            _rotate = true;
-            _moving = false;
-
-            int random = UnityEngine.Random.Range(1, 8);
-
-            yield return new WaitForSeconds(random);
-
-            _rotate = false;
-            _moving = true;
-
-            random = UnityEngine.Random.Range(1, 8);
-
-            yield return new WaitForSeconds(random);
-
-            yield return ChooseRandomAction();
+            InputAction.Invoke(actionType);
         }
     }
 }
