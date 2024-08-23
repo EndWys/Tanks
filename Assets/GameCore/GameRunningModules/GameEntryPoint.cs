@@ -1,5 +1,6 @@
 using Assets.GameCore.GameInputSystem;
-using Assets.GameCore.GamePlayModules;
+using Assets.GameCore.GamePlayModules.PlayerLogic;
+using Assets.GameCore.GamePlayModules.TanksMechanic;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -8,23 +9,28 @@ namespace Assets.GameCore.GameRunningModules
 {
     public class GameEntryPoint : IStartable
     {
-        private TankBehaviour _playerTank;
+        private PlayerStarter _playerStarter;
         private PlayerTankControlInput _playerInput;
 
+        private EnemySpawner _enemySpawner;
+
         [Inject]
-        public GameEntryPoint(PlayerTankControlInput playerInput, TankBehaviour playerTank)
+        public GameEntryPoint(PlayerTankControlInput playerInput, PlayerStarter playerStarter,
+            EnemySpawner enemySpawner)
         {
             _playerInput = playerInput;
-            _playerTank = playerTank;
+            _playerStarter = playerStarter;
+
+            _enemySpawner = enemySpawner;
         }
 
 
         public void Start()
         {
             _playerInput.Init();
-            _playerTank.Init();
+            _playerStarter.Init();
 
-            Debug.Log("Start");
+            _enemySpawner.Init();
         }
     }
 }

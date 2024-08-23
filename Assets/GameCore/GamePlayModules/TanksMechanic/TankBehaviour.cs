@@ -4,29 +4,21 @@ using Assets.GameCore.GamePlayModules.Obstacles;
 using UnityEngine;
 using VContainer;
 
-namespace Assets.GameCore.GamePlayModules
+namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
-    
+
     public class TankBehaviour : CachedMonoBehaviour
     {
         [SerializeField] private TankMovement _tankMovement;
         [SerializeField] private ObstaclesDetector _obstaclesDetector;
 
-        private IInputSender _input;
-
-        [Inject]
-        private void Construct(IInputSender input)
+        public void Init(IInputSender input)
         {
-            _input = input;
-        }
-
-        public void Init()
-        {
-            _tankMovement.Init(_input);
+            _tankMovement.Init(input);
             _obstaclesDetector.OnCollideWithObstacle += ColideWithObstacle;
         }
 
-        private void ColideWithObstacle(Collision2D collision, DefaultObstacles obst) 
+        private void ColideWithObstacle(Collision2D collision, DefaultObstacles obst)
         {
             _tankMovement.Crash(collision.GetContact(0).point, obst.StunDuration);
         }

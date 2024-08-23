@@ -1,4 +1,4 @@
-namespace Assets.GameCore.GamePlayModules
+namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
     public enum ControllAction
     {

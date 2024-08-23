@@ -1,4 +1,4 @@
-using Assets.GameCore.GamePlayModules;
+using Assets.GameCore.GamePlayModules.TanksMechanic;
 using Assets.GameCore.GameRunningModules;
 using System;
 using UnityEngine;

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.GameCore.GamePlayModules
+namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class TankMovement : CachedMonoBehaviour
@@ -16,23 +16,22 @@ namespace Assets.GameCore.GamePlayModules
 
         private Rigidbody2D _body;
 
-        private IInputSender _input;
-
         private Dictionary<ControllAction, Action> _tankMoves;
 
         private bool _isUnderControll = false;
+
+        private IInputSender _input;
 
         public void Init(IInputSender input)
         {
             _body = GetComponent<Rigidbody2D>();
 
-            _input = input;
-
-            _tankMoves = BuildTankMovesMap().ToDictionary(x => x.Key, y=> y.Value);
-
-            _input.InputAction += HandleInputAction;
+            _tankMoves = BuildTankMovesMap().ToDictionary(x => x.Key, y => y.Value);
 
             _isUnderControll = true;
+
+            _input = input;
+            _input.InputAction += HandleInputAction;
         }
 
         public void Crash(Vector3 contactPoint, float stunDuration)
