@@ -12,7 +12,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
     [RequireComponent(typeof(Rigidbody2D))]
     public class TankMovement : CachedMonoBehaviour
     {
-        [SerializeField] private PlayerMovementSettings _moveSettings;
+        [SerializeField] private TankConfigurations _moveSettings;
 
         private Rigidbody2D _body;
 

@@ -2,6 +2,7 @@ using Assets.CodeUtilities;
 using Assets.GameCore.GameInputSystem;
 using Assets.GameCore.GameRunningModules;
 using System;
+using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
@@ -11,13 +12,21 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
         void CallAIAction(ControllAction actionType);
     }
 
+    public interface IStateSwitcherHolder
+    {
+        IStateSwitcher StateSwitcher { get; }
+    }
+
     public class EnemyAIController : CachedMonoBehaviour, IAIInputSender, IAIActionCaller
     {
+        [SerializeField] private TankBehaviour _enemyTank;
+
         public event Action<ControllAction> InputAction = delegate (ControllAction action) { };
 
         private IGameTicker _ticker;
 
         private EnemyTankMovementStateMachine _stateMachine;
+
 
         public void Init(IGameTicker ticker)
         {
@@ -28,6 +37,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
             _stateMachine.Init();
 
             _ticker.OnTick += EveryTickAction;
+
+            _enemyTank.Init(this);
         }
 
         private void EveryTickAction()

@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovementStates
 {
-    public class EnemyRotatingState : EnemyTankMovementState
+    public class EnemyRotateStationaryState : EnemyTankMovementState
     {
         private float timer = 0;
 
-        public EnemyRotatingState(IAIActionCaller actionCaller) : base(actionCaller)
+        public EnemyRotateStationaryState(IAIActionCaller actionCaller) : base(actionCaller)
         {
         }
 

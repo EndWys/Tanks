@@ -6,7 +6,6 @@ using VContainer;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private TankBehaviour _enemyTank;
     [SerializeField] private EnemyAIController _enemyAIController;
 
 
@@ -20,8 +19,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void Init()
     {
-        _enemyTank.Init(_enemyAIController);
-
         _enemyAIController.Init(_gameTicker);
     }
 }

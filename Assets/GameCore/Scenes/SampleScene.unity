@@ -247,10 +247,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 275737398}
+  - component: {fileID: 275737394}
   - component: {fileID: 275737397}
   - component: {fileID: 275737396}
   - component: {fileID: 275737395}
-  - component: {fileID: 275737394}
   - component: {fileID: 275737393}
   - component: {fileID: 275737392}
   - component: {fileID: 275737391}
@@ -396,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963ecaf21ce1f9a468093d39895495cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyTank: {fileID: 275737397}
 --- !u!114 &275737395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa1a7bb80d769049840472a609afec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSettings: {fileID: 11400000, guid: ed617aba54ed21a4a887a07ef13abc82, type: 2}
+  _moveSettings: {fileID: 11400000, guid: 166fe1bdac5e9a0439d5fe5a95e3bd27, type: 2}
 --- !u!114 &275737397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,7 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa1a7bb80d769049840472a609afec8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSettings: {fileID: 11400000, guid: ed617aba54ed21a4a887a07ef13abc82, type: 2}
+  _moveSettings: {fileID: 11400000, guid: 6dda70c243e0f1e49ab246455f76efd8, type: 2}
 --- !u!61 &1210682849
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -974,7 +975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26cac81840f4f745bd1374f0d323c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyTank: {fileID: 275737397}
   _enemyAIController: {fileID: 275737394}
 --- !u!1 &1922881043
 GameObject:

@@ -7,7 +7,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
     public enum EnemyMoventStates
     {
         Move,
-        Rotate,
+        RotateAndMove,
+        RotateStationary,
     }
 
     public interface IStateSwitcher
@@ -30,9 +31,10 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
         public void Init()
         {
             RegisterState(new EnemyMovingState(_actionCaller), EnemyMoventStates.Move);
-            RegisterState(new EnemyRotatingState(_actionCaller), EnemyMoventStates.Rotate);
+            RegisterState(new EnemyRotatingAndMovingState(_actionCaller), EnemyMoventStates.RotateAndMove);
+            RegisterState(new EnemyRotateStationaryState(_actionCaller), EnemyMoventStates.RotateStationary);
 
-            TransitStateTo(EnemyMoventStates.Rotate);
+            TransitStateTo(EnemyMoventStates.RotateStationary);
         }
 
         public void TransitStateTo(EnemyMoventStates moventStates)

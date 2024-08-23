@@ -2,12 +2,11 @@ using Assets.CodeUtilities;
 using Assets.GameCore.GameInputSystem;
 using Assets.GameCore.GamePlayModules.Obstacles;
 using UnityEngine;
-using VContainer;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
 
-    public class TankBehaviour : CachedMonoBehaviour
+    public class TankBehaviour : CachedMonoBehaviour //TODO: NEED TO ADD EnemyTankBehaviour with EnemyAIController
     {
         [SerializeField] private TankMovement _tankMovement;
         [SerializeField] private ObstaclesDetector _obstaclesDetector;
