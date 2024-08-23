@@ -8,11 +8,11 @@ namespace Assets.GameCore.GameRunningModules
 {
     public class GameEntryPoint : IStartable
     {
-        private TankMovement _playerTank;
+        private TankBehaviour _playerTank;
         private PlayerTankControlInput _playerInput;
 
         [Inject]
-        public GameEntryPoint(PlayerTankControlInput playerInput, TankMovement playerTank)
+        public GameEntryPoint(PlayerTankControlInput playerInput, TankBehaviour playerTank)
         {
             _playerInput = playerInput;
             _playerTank = playerTank;

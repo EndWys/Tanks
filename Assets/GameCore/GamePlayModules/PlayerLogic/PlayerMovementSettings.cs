@@ -7,5 +7,7 @@ namespace Assets.GameCore.GamePlayModules.PlayerLogic
     {
         [SerializeField] public int MoveSpeed;
         [SerializeField] public int RotateSpeed;
+        [Space]
+        [SerializeField] public int CrashForce;
     }
 }
