@@ -37,6 +37,8 @@ namespace Assets.GameCore.GamePlayModules
 
         public void Crash(Vector3 contactPoint, float stunDuration)
         {
+            StopCoroutine(LoseControll(0));
+
             Vector3 repulsionDirection = (contactPoint - CachedTransform.position).normalized;
 
             _body.AddForce(repulsionDirection * -_moveSettings.CrashForce, ForceMode2D.Impulse);
