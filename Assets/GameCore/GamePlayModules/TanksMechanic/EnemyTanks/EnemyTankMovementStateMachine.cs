@@ -1,8 +1,6 @@
 using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovementStates;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
@@ -39,8 +37,6 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
         public void TransitStateTo(EnemyMoventStates moventStates)
         {
-            Debug.Log("Transit");
-
             if (_stateMap.TryGetValue(moventStates, out _currentState))
             {
                 _currentState = _currentState.ActivateState(this);

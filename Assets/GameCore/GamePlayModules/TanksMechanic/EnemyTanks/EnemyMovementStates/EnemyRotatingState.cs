@@ -1,5 +1,3 @@
-using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovementStates
