@@ -8,7 +8,7 @@ namespace Assets.GameCore.GameRunningModules
 {
     public class GameLifeTimeScope : LifetimeScope
     {
-        [SerializeField] private TankMovement _playerTank;
+        [SerializeField] private TankBehaviour _playerTank;
 
         protected override void Configure(IContainerBuilder builder)
         {
