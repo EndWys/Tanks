@@ -5,6 +5,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovement
     public class EnemyRotateStationaryState : EnemyTankMovementState
     {
         private float _timer = 0;
+        private ControllAction _direction;
 
         public EnemyRotateStationaryState(IAIActionCaller actionCaller, AIConfig aiConfig) : base(actionCaller, aiConfig)
         {
@@ -13,11 +14,21 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovement
         protected override void OnStateEnabled()
         {
             _timer = _stateDuration;
+            ChooseRandomDirection();
+        }
+
+        private void ChooseRandomDirection()
+        {
+            _direction = ControllAction.RotateLeft;
+
+            int random = Random.Range(0, 2);
+
+            if (random == 0) _direction = ControllAction.RotateRight;
         }
 
         public override void OnStateCurrenctlyActive()
         {
-            _aiActionCaller.CallAIAction(ControllAction.RotateLeft);
+            _aiActionCaller.CallAIAction(_direction);
 
             _timer -= Time.deltaTime;
             if (_timer <= 0) _stateSwitcher.TransitStateTo(EnemyMoventStates.Move, _aiConfig.StraightMoveDuration);

@@ -34,22 +34,23 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
             _input.InputAction += HandleInputAction;
         }
 
-        public void Crash(Vector3 contactPoint, float stunDuration)
+        public void Crash(Vector3 contactPoint, float stunDuration, Action onFinish)
         {
-            StopCoroutine(LoseControll(0));
+            StopCoroutine(LoseControll(stunDuration, onFinish));
 
             Vector3 repulsionDirection = (contactPoint - CachedTransform.position).normalized;
 
             _body.AddForce(repulsionDirection * -_moveSettings.CrashForce, ForceMode2D.Impulse);
 
-            StartCoroutine(LoseControll(stunDuration));
+            StartCoroutine(LoseControll(stunDuration, onFinish));
         }
 
-        private IEnumerator LoseControll(float stunDuration)
+        private IEnumerator LoseControll(float stunDuration, Action onFinish)
         {
             _isUnderControll = false;
             yield return new WaitForSeconds(stunDuration);
             _isUnderControll = true;
+            onFinish.Invoke();
         }
 
         private void HandleInputAction(ControllAction actionType)

@@ -13,11 +13,14 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
     public interface IStateSwitcher
     {
+        AIConfig AIConfig { get; }
         void TransitStateTo(EnemyMoventStates moventStates, float stateDuration);
     }
 
     public class EnemyTankMovementStateMachine : IStateSwitcher
     {
+        public AIConfig AIConfig => _aiConfig;
+
         private IAIActionCaller _actionCaller;
 
         private EnemyTankMovementState _currentState;
@@ -37,7 +40,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
             RegisterState(new EnemyRotatingAndMovingState(_actionCaller, _aiConfig), EnemyMoventStates.RotateAndMove);
             RegisterState(new EnemyRotateStationaryState(_actionCaller, _aiConfig), EnemyMoventStates.RotateStationary);
 
-            TransitStateTo(EnemyMoventStates.RotateStationary, Random.Range(0.2f, 1f));
+            TransitStateTo(EnemyMoventStates.RotateStationary, 
+                Random.Range(_aiConfig.MinStationaryRotationTime, _aiConfig.MaxStationaryRotationTime));
         }
 
         public void TransitStateTo(EnemyMoventStates moventStates, float stateDuration)

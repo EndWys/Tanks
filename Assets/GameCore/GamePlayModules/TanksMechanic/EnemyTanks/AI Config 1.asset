@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StraightMoveDuration: 3
   TurnDurationInMotion: 2
+  MinStationaryRotationTime: 1
+  MaxStationaryRotationTime: 3

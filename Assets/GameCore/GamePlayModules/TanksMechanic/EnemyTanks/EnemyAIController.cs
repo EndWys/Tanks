@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
-    public interface IAIInputSender : IInputSender { }
     public interface IAIActionCaller
     {
         void CallAIAction(ControllAction actionType);
@@ -17,12 +16,15 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
         IStateSwitcher StateSwitcher { get; }
     }
 
-    public class EnemyAIController : CachedMonoBehaviour, IAIInputSender, IAIActionCaller
+    public interface IAIController : IInputSender, IStateSwitcherHolder { }
+
+    public class EnemyAIController : CachedMonoBehaviour, IAIActionCaller, IAIController
     {
         [SerializeField] private AIConfig _aiConfig;
-        [SerializeField] private TankBehaviour _enemyTank;
+        [SerializeField] private EnemyTankBehaviour _enemyTank;
 
         public event Action<ControllAction> InputAction = delegate (ControllAction action) { };
+        public IStateSwitcher StateSwitcher => _stateMachine;
 
         private IGameTicker _ticker;
 

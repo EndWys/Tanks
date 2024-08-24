@@ -6,20 +6,17 @@ using UnityEngine;
 namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
 
-    public class TankBehaviour : CachedMonoBehaviour //TODO: NEED TO ADD EnemyTankBehaviour with EnemyAIController
+    public class TankBehaviour : BaseTankBehaviour
     {
-        [SerializeField] private TankMovement _tankMovement;
-        [SerializeField] private ObstaclesDetector _obstaclesDetector;
-
         public void Init(IInputSender input)
         {
             _tankMovement.Init(input);
             _obstaclesDetector.OnCollideWithObstacle += ColideWithObstacle;
         }
 
-        private void ColideWithObstacle(Collision2D collision, DefaultObstacles obst)
+        protected override void ColideWithObstacle(Collision2D collision, DefaultObstacles obst)
         {
-            _tankMovement.Crash(collision.GetContact(0).point, obst.StunDuration);
+            _tankMovement.Crash(collision.GetContact(0).point, obst.StunDuration, () => { });
         }
     }
 }

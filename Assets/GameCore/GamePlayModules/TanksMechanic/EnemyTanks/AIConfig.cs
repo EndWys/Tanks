@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class AIConfig : ScriptableObject
 {
-    public float StraightMoveDuration;
-    public float TurnDurationInMotion;
+    [SerializeField] public float StraightMoveDuration;
+    [SerializeField] public float TurnDurationInMotion;
+    [Space]
+    [SerializeField] public float MinStationaryRotationTime;
+    [SerializeField] public float MaxStationaryRotationTime;
 }
