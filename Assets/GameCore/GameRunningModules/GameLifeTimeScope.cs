@@ -10,7 +10,7 @@ namespace Assets.GameCore.GameRunningModules
 {
     public class GameLifeTimeScope : LifetimeScope
     {
-        [SerializeField] private PlayerStarter _playerStarter;
+        [SerializeField] private PlayerSpawner _playerStarter;
         [SerializeField] private EnemySpawner _enemySpawner;
 
         protected override void Configure(IContainerBuilder builder)

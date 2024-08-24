@@ -5,7 +5,7 @@ using VContainer;
 
 namespace Assets.GameCore.GamePlayModules.PlayerLogic
 {
-    public class PlayerStarter : MonoBehaviour
+    public class PlayerSpawner : MonoBehaviour
     {
         [SerializeField] private TankBehaviour _playerTank;
 

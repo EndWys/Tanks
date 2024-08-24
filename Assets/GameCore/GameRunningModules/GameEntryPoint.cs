@@ -9,13 +9,13 @@ namespace Assets.GameCore.GameRunningModules
 {
     public class GameEntryPoint : IStartable
     {
-        private PlayerStarter _playerStarter;
+        private PlayerSpawner _playerStarter;
         private PlayerTankControlInput _playerInput;
 
         private EnemySpawner _enemySpawner;
 
         [Inject]
-        public GameEntryPoint(PlayerTankControlInput playerInput, PlayerStarter playerStarter,
+        public GameEntryPoint(PlayerTankControlInput playerInput, PlayerSpawner playerStarter,
             EnemySpawner enemySpawner)
         {
             _playerInput = playerInput;
