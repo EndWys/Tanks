@@ -1,6 +1,7 @@
 using Assets.CodeUtilities;
 using Assets.GameCore.GamePlayModules.Obstacles;
 using Assets.GameCore.GamePlayModules.TanksMechanic;
+using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyStateMachine;
 using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks

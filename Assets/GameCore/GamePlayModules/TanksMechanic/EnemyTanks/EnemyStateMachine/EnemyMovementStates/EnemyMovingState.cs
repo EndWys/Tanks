@@ -1,6 +1,7 @@
+using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.Configs;
 using UnityEngine;
 
-namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovementStates
+namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyStateMachine.EnemyMovementStates
 {
     public class EnemyMovingState : EnemyTankMovementState
     {

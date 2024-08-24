@@ -1,8 +1,9 @@
-using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovementStates;
+using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.Configs;
+using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyStateMachine.EnemyMovementStates;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
+namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyStateMachine
 {
     public enum EnemyMoventStates
     {
@@ -40,7 +41,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
             RegisterState(new EnemyRotatingAndMovingState(_actionCaller, _aiConfig), EnemyMoventStates.RotateAndMove);
             RegisterState(new EnemyRotateStationaryState(_actionCaller, _aiConfig), EnemyMoventStates.RotateStationary);
 
-            TransitStateTo(EnemyMoventStates.RotateStationary, 
+            TransitStateTo(EnemyMoventStates.RotateStationary,
                 Random.Range(_aiConfig.MinStationaryRotationTime, _aiConfig.MaxStationaryRotationTime));
         }
 

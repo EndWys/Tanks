@@ -1,4 +1,6 @@
-namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
+using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.Configs;
+
+namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyStateMachine.EnemyMovementStates
 {
     public abstract class EnemyTankMovementState
     {
@@ -25,7 +27,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
         {
             _stateSwitcher = stateSwitcher;
 
-            if(stateFixedDuration > 0) _stateDuration = stateFixedDuration;
+            if (stateFixedDuration > 0) _stateDuration = stateFixedDuration;
 
             OnStateEnabled();
 
