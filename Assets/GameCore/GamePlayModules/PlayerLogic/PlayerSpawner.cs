@@ -1,5 +1,6 @@
 using Assets.GameCore.GameInputSystem;
 using Assets.GameCore.GamePlayModules.TanksMechanic;
+using Assets.GameCore.GameRunningModules;
 using UnityEngine;
 using VContainer;
 
@@ -7,19 +8,19 @@ namespace Assets.GameCore.GamePlayModules.PlayerLogic
 {
     public class PlayerSpawner : MonoBehaviour
     {
-        [SerializeField] private TankBehaviour _playerTank;
+        [SerializeField] private PlayerTankBehaviour _playerTank;
 
-        private IInputSender _input;
+        private IGameTicker _ticker;
 
         [Inject]
-        private void Construct(IInputSender input)
+        private void Construct(IGameTicker ticker)
         {
-            _input = input;
+            _ticker = ticker;
         }
 
         public void Init()
         {
-            _playerTank.Init(_input);
+            _playerTank.Init(_ticker);
         }
     }
 }

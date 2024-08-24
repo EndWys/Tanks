@@ -1,7 +1,4 @@
-using Assets.GameCore.GameInputSystem;
 using Assets.GameCore.GamePlayModules.PlayerLogic;
-using Assets.GameCore.GamePlayModules.TanksMechanic;
-using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -15,8 +12,6 @@ namespace Assets.GameCore.GameRunningModules
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<PlayerTankControlInput>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-
             builder.RegisterComponent(_playerStarter);
             builder.RegisterComponent(_enemySpawner);
 

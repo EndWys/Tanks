@@ -1,4 +1,3 @@
-using Assets.GameCore.GamePlayModules.TanksMechanic;
 using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks;
 using Assets.GameCore.GameRunningModules;
 using UnityEngine;
@@ -6,8 +5,7 @@ using VContainer;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private EnemyAIController _enemyAIController;
-
+    [SerializeField] private EnemyTankBehaviour _enemyTankBehaviour;
 
     private IGameTicker _gameTicker;
 
@@ -19,6 +17,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void Init()
     {
-        _enemyAIController.Init(_gameTicker);
+        _enemyTankBehaviour.Init(_gameTicker);
     }
 }

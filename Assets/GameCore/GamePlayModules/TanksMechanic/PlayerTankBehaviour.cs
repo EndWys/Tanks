@@ -1,16 +1,20 @@
-using Assets.CodeUtilities;
 using Assets.GameCore.GameInputSystem;
 using Assets.GameCore.GamePlayModules.Obstacles;
+using Assets.GameCore.GameRunningModules;
 using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
 
-    public class TankBehaviour : BaseTankBehaviour
+    public class PlayerTankBehaviour : BaseTankBehaviour
     {
-        public void Init(IInputSender input)
+        private PlayerTankControlInput _inputController;
+
+        public override void Init(IGameTicker ticker)
         {
-            _tankMovement.Init(input);
+            _inputController = new();
+            _inputController.Init(ticker);
+            _tankMovement.Init(_inputController);
             _obstaclesDetector.OnCollideWithObstacle += ColideWithObstacle;
         }
 

@@ -20,11 +20,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
     public interface IAIController : IInputSender, IStateSwitcherHolder { }
 
-    public class EnemyAIController : CachedMonoBehaviour, IAIActionCaller, IAIController
+    public class EnemyAIController : IAIActionCaller, IAIController
     {
-        [SerializeField] private AIConfig _aiConfig;
-        [SerializeField] private EnemyTankBehaviour _enemyTank;
-
         public event Action<ControllAction> InputAction = delegate (ControllAction action) { };
         public IStateSwitcher StateSwitcher => _stateMachine;
 
@@ -32,17 +29,15 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
         private EnemyTankMovementStateMachine _stateMachine;
 
-        public void Init(IGameTicker ticker)
+        public void Init(IGameTicker ticker, AIConfig aiConfig)
         {
             _ticker = ticker;
 
-            _stateMachine = new(this, _aiConfig);
+            _stateMachine = new(this, aiConfig);
 
             _stateMachine.Init();
 
             _ticker.OnTick += EveryTickAction;
-
-            _enemyTank.Init(this);
         }
 
         private void EveryTickAction()

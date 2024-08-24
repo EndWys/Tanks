@@ -1,20 +1,22 @@
-using Assets.CodeUtilities;
 using Assets.GameCore.GamePlayModules.Obstacles;
-using Assets.GameCore.GamePlayModules.TanksMechanic;
+using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.Configs;
 using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyStateMachine;
+using Assets.GameCore.GameRunningModules;
 using UnityEngine;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
     public class EnemyTankBehaviour : BaseTankBehaviour
     {
-        private IStateSwitcher _stateSwitcher;
+        [SerializeField] private AIConfig _aiConfig;
 
-        public void Init(IAIController aiController)
+        private EnemyAIController _enemyAIController;
+
+        public override void Init(IGameTicker ticker)
         {
-            _stateSwitcher = aiController.StateSwitcher;
-
-            _tankMovement.Init(aiController);
+            _enemyAIController = new();
+            _enemyAIController.Init(ticker, _aiConfig);
+            _tankMovement.Init(_enemyAIController);
             _obstaclesDetector.OnCollideWithObstacle += ColideWithObstacle;
         }
 
@@ -22,8 +24,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
         {
             _tankMovement.Crash(collision.GetContact(0).point, obst.StunDuration, () =>
             {
-                _stateSwitcher.TransitStateTo(EnemyMoventStates.RotateStationary, 
-                    Random.Range(_stateSwitcher.AIConfig.MinStationaryRotationTime, _stateSwitcher.AIConfig.MaxStationaryRotationTime));
+                _enemyAIController.StateSwitcher.TransitStateTo(EnemyMoventStates.RotateStationary, 
+                    Random.Range(_aiConfig.MinStationaryRotationTime, _aiConfig.MaxStationaryRotationTime));
             });
         }
     }
