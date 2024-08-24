@@ -13,7 +13,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
     public interface IStateSwitcher
     {
-        void TransitStateTo(EnemyMoventStates state);
+        void TransitStateTo(EnemyMoventStates moventStates, float stateDuration);
     }
 
     public class EnemyTankMovementStateMachine : IStateSwitcher
@@ -23,25 +23,28 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
         private EnemyTankMovementState _currentState;
         private Dictionary<EnemyMoventStates, EnemyTankMovementState> _stateMap = new();
 
-        public EnemyTankMovementStateMachine(IAIActionCaller caller)
+        private AIConfig _aiConfig;
+
+        public EnemyTankMovementStateMachine(IAIActionCaller caller, AIConfig aIConfig)
         {
             _actionCaller = caller;
+            _aiConfig = aIConfig;
         }
 
         public void Init()
         {
-            RegisterState(new EnemyMovingState(_actionCaller), EnemyMoventStates.Move);
-            RegisterState(new EnemyRotatingAndMovingState(_actionCaller), EnemyMoventStates.RotateAndMove);
-            RegisterState(new EnemyRotateStationaryState(_actionCaller), EnemyMoventStates.RotateStationary);
+            RegisterState(new EnemyMovingState(_actionCaller, _aiConfig), EnemyMoventStates.Move);
+            RegisterState(new EnemyRotatingAndMovingState(_actionCaller, _aiConfig), EnemyMoventStates.RotateAndMove);
+            RegisterState(new EnemyRotateStationaryState(_actionCaller, _aiConfig), EnemyMoventStates.RotateStationary);
 
-            TransitStateTo(EnemyMoventStates.RotateStationary);
+            TransitStateTo(EnemyMoventStates.RotateStationary, Random.Range(0.2f, 1f));
         }
 
-        public void TransitStateTo(EnemyMoventStates moventStates)
+        public void TransitStateTo(EnemyMoventStates moventStates, float stateDuration)
         {
             if (_stateMap.TryGetValue(moventStates, out _currentState))
             {
-                _currentState = _currentState.ActivateState(this);
+                _currentState = _currentState.ActivateState(this, stateDuration);
                 return;
             }
 

@@ -19,6 +19,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
     public class EnemyAIController : CachedMonoBehaviour, IAIInputSender, IAIActionCaller
     {
+        [SerializeField] private AIConfig _aiConfig;
         [SerializeField] private TankBehaviour _enemyTank;
 
         public event Action<ControllAction> InputAction = delegate (ControllAction action) { };
@@ -27,12 +28,11 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
         private EnemyTankMovementStateMachine _stateMachine;
 
-
         public void Init(IGameTicker ticker)
         {
             _ticker = ticker;
 
-            _stateMachine = new(this);
+            _stateMachine = new(this, _aiConfig);
 
             _stateMachine.Init();
 

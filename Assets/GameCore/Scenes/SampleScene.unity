@@ -396,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963ecaf21ce1f9a468093d39895495cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aiConfig: {fileID: 11400000, guid: e59cbe93e7deebc4184f5bf4258048a3, type: 2}
   _enemyTank: {fileID: 275737397}
 --- !u!114 &275737395
 MonoBehaviour:

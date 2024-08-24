@@ -4,24 +4,23 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks.EnemyMovement
 {
     public class EnemyRotateStationaryState : EnemyTankMovementState
     {
-        private float timer = 0;
+        private float _timer = 0;
 
-        public EnemyRotateStationaryState(IAIActionCaller actionCaller) : base(actionCaller)
+        public EnemyRotateStationaryState(IAIActionCaller actionCaller, AIConfig aiConfig) : base(actionCaller, aiConfig)
         {
         }
 
-
         protected override void OnStateEnabled()
         {
-            timer = 1f;
+            _timer = _stateDuration;
         }
 
         public override void OnStateCurrenctlyActive()
         {
             _aiActionCaller.CallAIAction(ControllAction.RotateLeft);
 
-            timer -= Time.deltaTime;
-            if (timer <= 0) _stateSwitcher.TransitStateTo(EnemyMoventStates.Move);
+            _timer -= Time.deltaTime;
+            if (_timer <= 0) _stateSwitcher.TransitStateTo(EnemyMoventStates.Move, _aiConfig.StraightMoveDuration);
         }
     }
 }

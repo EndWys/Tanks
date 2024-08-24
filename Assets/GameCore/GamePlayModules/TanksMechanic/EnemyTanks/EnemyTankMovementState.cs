@@ -4,15 +4,28 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
     {
         protected IAIActionCaller _aiActionCaller;
         protected IStateSwitcher _stateSwitcher;
+        protected AIConfig _aiConfig;
 
-        public EnemyTankMovementState(IAIActionCaller actionCaller)
+        protected float _stateDuration;
+
+        private IAIActionCaller actionCaller;
+
+        public EnemyTankMovementState(IAIActionCaller actionCaller, AIConfig aiConfig)
         {
             _aiActionCaller = actionCaller;
+            _aiConfig = aiConfig;
         }
 
-        public EnemyTankMovementState ActivateState(IStateSwitcher stateSwitcher)
+        protected EnemyTankMovementState(IAIActionCaller actionCaller)
+        {
+            this.actionCaller = actionCaller;
+        }
+
+        public EnemyTankMovementState ActivateState(IStateSwitcher stateSwitcher, float stateFixedDuration)
         {
             _stateSwitcher = stateSwitcher;
+
+            if(stateFixedDuration > 0) _stateDuration = stateFixedDuration;
 
             OnStateEnabled();
 
