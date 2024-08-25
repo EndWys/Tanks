@@ -9,7 +9,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
     public abstract class BaseTankBehaviour : PoolingObject
     {
-        [SerializeField] protected TankMovement _tankMovement;
+        [SerializeField] protected TankActions _tankMovement;
         [SerializeField] protected ObstaclesDetector _obstaclesDetector;
 
         public event Action<BaseTankBehaviour> OnDestroy = delegate { }; 
@@ -43,6 +43,12 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
             {
                 spawn.ExitSpawn(_id);
             }
+        }
+
+        public override void OnRelease()
+        {
+            OnDestroy = delegate { };
+            base.OnRelease();
         }
     }
 }

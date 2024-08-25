@@ -1,11 +1,14 @@
+using Assets.CodeUtilities;
 using System;
-using UnityEngine;
 
-public class BulletTarget : MonoBehaviour
+namespace Assets.GameCore.GamePlayModules.Obstacles
 {
-    public event Action OnBulletHit = () => { };
-    public void TakeHit()
+    public class BulletTarget : CachedMonoBehaviour
     {
-        OnBulletHit.Invoke();
+        public event Action OnBulletHit = () => { };
+        public void TakeHit()
+        {
+            OnBulletHit.Invoke();
+        }
     }
 }

@@ -69,6 +69,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSettings: {fileID: 11400000, guid: 166fe1bdac5e9a0439d5fe5a95e3bd27, type: 2}
+  _bulletPrefab: {fileID: 2190080665966306741, guid: 42d9789f6ec7f95488b2b7dda0965411, type: 3}
 --- !u!114 &678860951998499248
 MonoBehaviour:
   m_ObjectHideFlags: 0

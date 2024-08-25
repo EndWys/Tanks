@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 1035274589}
   - component: {fileID: 1035274590}
   - component: {fileID: 1035274592}
+  - component: {fileID: 1035274593}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -679,8 +680,8 @@ Transform:
   m_GameObject: {fileID: 1035274588}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.06, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 5, z: 1}
+  m_LocalPosition: {x: -10, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -730,6 +731,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1035274593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035274588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3ee725856f56e4b8fccef02f2b542b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1109728246
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSettings: {fileID: 11400000, guid: 6dda70c243e0f1e49ab246455f76efd8, type: 2}
+  _bulletPrefab: {fileID: 2190080665966306741, guid: 42d9789f6ec7f95488b2b7dda0965411, type: 3}
 --- !u!61 &1210682849
 BoxCollider2D:
   m_ObjectHideFlags: 0

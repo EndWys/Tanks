@@ -1,5 +1,7 @@
 using Assets.CodeUtilities;
 using Assets.GameCore.GameInputSystem;
+using Assets.GameCore.GamePlayModules.Obstacles;
+using Assets.GameCore.GamePlayModules.Other.PoolingSystem;
 using Assets.GameCore.GamePlayModules.PlayerLogic;
 using System;
 using System.Collections;
@@ -10,9 +12,13 @@ using UnityEngine;
 namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class TankMovement : CachedMonoBehaviour
+    public class TankActions : CachedMonoBehaviour
     {
         [SerializeField] private TankConfigurations _moveSettings;
+
+        [SerializeField] private GameObject _bulletPrefab;
+
+        private Pooling<Bullet> _bulletPool = new();
 
         private Rigidbody2D _body;
 
@@ -32,6 +38,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
             _input = input;
             _input.InputAction += HandleInputAction;
+
+            _bulletPool.Initialize(_bulletPrefab);
         }
 
         public void Crash(Vector3 contactPoint, float stunDuration, Action onFinish)
@@ -86,30 +94,46 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
         private void Shoot()
         {
+            Bullet bullet = _bulletPool.Collect(null, CachedTransform.position);
+
             Vector3 direction = CachedTransform.TransformDirection(Vector3.up);
 
             List<RaycastHit2D> hits = new();
 
             Physics2D.Raycast(transform.position, direction, new(), hits);
 
-            foreach (RaycastHit2D hit in hits)
-            {
-                if(IsBulletTarget(hit, out BulletTarget target))
-                {
-                    target.TakeHit();
-                    return;
-                }
-            }
-        }
+            Vector3 bulletTargetPos = transform.position + direction * Bullet.MAX_BULLET_DISTANCE;
 
-        private bool IsBulletTarget(RaycastHit2D hit, out BulletTarget bulletTarget)
-        {
-            var hitObject = hit.collider.gameObject;
+            BulletTarget bulletTarget = null;
 
-            if (hitObject.TryGetComponent(out BulletTarget target))
+            if (TryToFindBulletTarget(hits, out BulletTarget target))
             {
                 bulletTarget = target;
-                return true;
+                bulletTargetPos = target.CachedTransform.position;
+            }
+
+            bullet.Init(bulletTargetPos);
+            bullet.FlyToTarget();
+
+            if (bulletTarget != null)
+            {
+                bullet.OnDestroy += delegate { bulletTarget.TakeHit(); };
+            }
+
+            bullet.OnDestroy += _bulletPool.Release;
+        }
+
+        private bool TryToFindBulletTarget(List<RaycastHit2D> hits, out BulletTarget bulletTarget)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
+                var hitObject = hit.collider.gameObject;
+
+                if (hitObject.TryGetComponent(out BulletTarget target))
+                {
+                    bulletTarget = target;
+                    return true;
+                }
             }
 
             bulletTarget = null;
