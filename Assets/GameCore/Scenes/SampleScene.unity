@@ -433,7 +433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d9ee0141c97cf418b666827d5c34a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraTarget: {fileID: 1210682847}
+  _cameraTarget: {fileID: 1210682847}
+  _cameraSpeed: 20
 --- !u!1 &539896435
 GameObject:
   m_ObjectHideFlags: 0

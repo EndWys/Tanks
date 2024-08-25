@@ -6,16 +6,18 @@ namespace Assets.GameCore.GamePlayModules.Other
     [RequireComponent(typeof(Camera))]
     public class SmoothFollowingCamera : CachedMonoBehaviour
     {
-        [SerializeField] private Transform CameraTarget;
+        [SerializeField] private Transform _cameraTarget;
+        [SerializeField] private int _cameraSpeed;
 
         private void Update()
         {
-            if (CameraTarget != null)
+            if (_cameraTarget != null)
             {
-                Vector3 tp = CameraTarget.position;
+                Vector3 tp = _cameraTarget.position;
 
                 Vector3 cameraPosition = new Vector3(tp.x, tp.y, CachedTransform.position.z);
-                CachedTransform.position = cameraPosition;
+
+                CachedTransform.position = Vector3.MoveTowards(CachedTransform.position, cameraPosition, _cameraSpeed * Time.deltaTime);
             }
         }
     }
