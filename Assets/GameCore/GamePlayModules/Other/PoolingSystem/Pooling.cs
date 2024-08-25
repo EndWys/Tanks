@@ -14,6 +14,11 @@ namespace Assets.GameCore.GamePlayModules.Other.PoolingSystem
         public delegate void ObjectCreationCallback(T obj);
         public event ObjectCreationCallback OnObjectCreationCallBack;
 
+        public Pooling<T> Initialize(GameObject refObject)
+        {
+            return Initialize(0, refObject, null);
+        }
+
         public Pooling<T> Initialize(GameObject refObject, Transform parent)
         {
             return Initialize(0, refObject, parent);

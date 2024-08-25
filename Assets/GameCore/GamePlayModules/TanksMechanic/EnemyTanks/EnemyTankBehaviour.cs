@@ -14,6 +14,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
         public override void Init(IGameTicker ticker)
         {
+            base.Init(ticker);
             _enemyAIController = new();
             _enemyAIController.Init(ticker, _aiConfig);
             _tankMovement.Init(_enemyAIController);

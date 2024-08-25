@@ -12,6 +12,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
         public override void Init(IGameTicker ticker)
         {
+            base.Init(ticker);
             _inputController = new();
             _inputController.Init(ticker);
             _tankMovement.Init(_inputController);
