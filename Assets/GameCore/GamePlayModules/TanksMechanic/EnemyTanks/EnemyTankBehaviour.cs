@@ -8,6 +8,8 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
     public class EnemyTankBehaviour : BaseTankBehaviour
     {
+        [Space]
+        [SerializeField] private BulletTarget _bulletTarget;
         [SerializeField] private AIConfig _aiConfig;
 
         private EnemyAIController _enemyAIController;
@@ -19,6 +21,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
             _enemyAIController.Init(ticker, _aiConfig);
             _tankMovement.Init(_enemyAIController);
             _obstaclesDetector.OnCollideWithObstacle += ColideWithObstacle;
+            _bulletTarget.OnBulletHit += OnBulletHit;
         }
 
         protected override void ColideWithObstacle(Collision2D collision, DefaultObstacles obst)
@@ -28,6 +31,11 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
                 _enemyAIController.StateSwitcher.TransitStateTo(EnemyMoventStates.RotateStationary, 
                     Random.Range(_aiConfig.MinStationaryRotationTime, _aiConfig.MaxStationaryRotationTime));
             });
+        }
+
+        protected override void OnBulletHit()
+        {
+            TankDestroy();
         }
     }
 }

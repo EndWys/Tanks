@@ -9,8 +9,10 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
     public abstract class BaseTankBehaviour : PoolingObject
     {
-        [SerializeField] protected TankMovement _tankMovement;
+        [SerializeField] protected TankActions _tankMovement;
         [SerializeField] protected ObstaclesDetector _obstaclesDetector;
+
+        public event Action<BaseTankBehaviour> OnDestroy = delegate { }; 
         public Guid ID => _id;
         private Guid _id;
 
@@ -24,12 +26,29 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
         }
 
+
+        protected virtual void OnBulletHit()
+        {
+
+        }
+
+        protected void TankDestroy()
+        {
+            OnDestroy.Invoke(this);
+        }
+
         private void OnTriggerExit2D(Collider2D trigger)
         {
             if (trigger.gameObject.TryGetComponent(out TankSpawnPoint spawn))
             {
                 spawn.ExitSpawn(_id);
             }
+        }
+
+        public override void OnRelease()
+        {
+            OnDestroy = delegate { };
+            base.OnRelease();
         }
     }
 }

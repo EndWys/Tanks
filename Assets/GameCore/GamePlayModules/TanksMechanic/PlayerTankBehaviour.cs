@@ -21,7 +21,10 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
         protected override void ColideWithObstacle(Collision2D collision, DefaultObstacles obst)
         {
-            _tankMovement.Crash(collision.GetContact(0).point, obst.StunDuration, () => { });
+            _tankMovement.Crash(collision.GetContact(0).point, obst.StunDuration, () => 
+            {
+                TankDestroy();
+            });
         }
     }
 }
