@@ -1,8 +1,6 @@
 using Assets.GameCore.GamePlayModules.TanksMechanic;
 using Assets.GameCore.GameRunningModules;
 using System;
-using UnityEngine;
-using VContainer;
 
 namespace Assets.GameCore.GameInputSystem
 {
@@ -27,7 +25,8 @@ namespace Assets.GameCore.GameInputSystem
         {
             foreach (var actionPair in ControlSettings.InputConfigurations)
             {
-                if (Input.GetKey(actionPair.Value))
+                var inputSet = actionPair.Value;
+                if (inputSet.InputAction(inputSet.KeyCode))
                 {
                     InputAction.Invoke(actionPair.Key);
                 }

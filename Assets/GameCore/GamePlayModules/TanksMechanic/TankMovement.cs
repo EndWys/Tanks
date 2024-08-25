@@ -84,12 +84,18 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
             CachedTransform.Rotate(Vector3.back * Time.deltaTime * _moveSettings.RotateSpeed);
         }
 
+        private void Shoot()
+        {
+            //shoot
+        }
+
         private IEnumerable<KeyValuePair<ControllAction, Action>> BuildTankMovesMap()
         {
             yield return new(ControllAction.MoveForward, MoveForward);
             yield return new(ControllAction.MoveBack, MoveBack);
             yield return new(ControllAction.RotateLeft, RotateLeft);
             yield return new(ControllAction.RotateRight, RotateRight);
+            yield return new(ControllAction.Shoot, Shoot);
         }
     }
 }
