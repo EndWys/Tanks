@@ -17,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
 
     private IGameTicker _gameTicker;
 
+    private List<BaseTankBehaviour> _activeTanks = new();
+
     [Inject]
     private void Construct(IGameTicker gameTicker)
     {
@@ -27,7 +29,44 @@ public class EnemySpawner : MonoBehaviour
     {
         _tanksPool.Initialize(_enemyTankPrefab);
 
-        StartCoroutine(StarterSpawn());
+        TryToRespawnAll();
+    }
+
+    private IEnumerator SpawnEnemy()
+    {
+        yield return new WaitUntil(IsAnyPossibleSpawnPoint);
+
+        var possibleSpawnPoint = _spawnPoints.Where(point => point.IsFree).ToList();
+
+        int randIndex = Random.Range(0, possibleSpawnPoint.Count);
+
+        TankSpawnPoint spawn = possibleSpawnPoint[randIndex];
+
+        BaseTankBehaviour tank = _tanksPool.Collect(null, spawn.CachedTransform.position, false);
+
+        _activeTanks.Add(tank);
+
+        tank.Init(_gameTicker);
+        spawn.PrepareTankToSpawn(tank.ID);
+
+        tank.OnDestroy += OnDestroyedTank;
+    }
+
+    private bool IsAnyPossibleSpawnPoint()
+    {
+        return _spawnPoints.Any(point => point.IsFree);
+    } 
+
+    private void OnDestroyedTank(BaseTankBehaviour tank)
+    {
+        _activeTanks.Remove(tank);
+        _tanksPool.Release(tank);
+        TryToRespawnAll();
+    }
+
+    private void TryToRespawnAll()
+    {
+        if (_activeTanks.Count == 0) StartCoroutine(StarterSpawn());
     }
 
     private IEnumerator StarterSpawn()
@@ -35,28 +74,6 @@ public class EnemySpawner : MonoBehaviour
         yield return SpawnEnemy();
         yield return SpawnEnemy();
         yield return SpawnEnemy();
+        yield return SpawnEnemy();
     }
-
-    private IEnumerator SpawnEnemy()
-    {
-        yield return new WaitUntil(TryToChooseSpawnpoint);
-
-        var possibleSpawnPoint = _spawnPoints.Where(point => point.IsFree).ToList();
-
-        int randIndex = Random.Range(0, possibleSpawnPoint.Count);
-        var spawn = possibleSpawnPoint[randIndex];
-
-        var tank = _tanksPool.Collect(null, spawn.CachedTransform.position, false);
-
-        tank.OnDestroy += _tanksPool.Release;
-
-        tank.Init(_gameTicker);
-
-        spawn.PrepareTankToSpawn(tank.ID);
-    }
-
-    private bool TryToChooseSpawnpoint()
-    {
-        return _spawnPoints.Any(point => point.IsFree);
-    } 
 }
