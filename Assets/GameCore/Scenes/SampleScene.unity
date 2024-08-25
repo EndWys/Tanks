@@ -1141,6 +1141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36a01a796ccb33447b9af95f34c84444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawnPoints:
+  - {fileID: 539896437}
+  - {fileID: 2062260427}
+  - {fileID: 483576667}
+  - {fileID: 1109728247}
   _playerTank: {fileID: 1210682851}
 --- !u!1 &2062260425
 GameObject:
