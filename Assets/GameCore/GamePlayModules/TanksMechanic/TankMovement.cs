@@ -86,7 +86,34 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
         private void Shoot()
         {
-            //shoot
+            Vector3 direction = CachedTransform.TransformDirection(Vector3.up);
+
+            List<RaycastHit2D> hits = new();
+
+            Physics2D.Raycast(transform.position, direction, new(), hits);
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                if(IsBulletTarget(hit, out BulletTarget target))
+                {
+                    target.TakeHit();
+                    return;
+                }
+            }
+        }
+
+        private bool IsBulletTarget(RaycastHit2D hit, out BulletTarget bulletTarget)
+        {
+            var hitObject = hit.collider.gameObject;
+
+            if (hitObject.TryGetComponent(out BulletTarget target))
+            {
+                bulletTarget = target;
+                return true;
+            }
+
+            bulletTarget = null;
+            return false;
         }
 
         private IEnumerable<KeyValuePair<ControllAction, Action>> BuildTankMovesMap()

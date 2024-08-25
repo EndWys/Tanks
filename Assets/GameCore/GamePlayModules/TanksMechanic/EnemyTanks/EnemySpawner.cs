@@ -48,6 +48,8 @@ public class EnemySpawner : MonoBehaviour
 
         var tank = _tanksPool.Collect(null, spawn.CachedTransform.position, false);
 
+        tank.OnDestroy += _tanksPool.Release;
+
         tank.Init(_gameTicker);
 
         spawn.PrepareTankToSpawn(tank.ID);

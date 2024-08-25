@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2976101387196298474}
   - component: {fileID: 303763142434007958}
   - component: {fileID: 4092837784434952976}
+  - component: {fileID: 7768533466660068707}
   m_Layer: 0
   m_Name: EnemyTank
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tankMovement: {fileID: 2933482978640857890}
   _obstaclesDetector: {fileID: 678860951998499248}
+  _bulletTarget: {fileID: 7768533466660068707}
   _aiConfig: {fileID: 11400000, guid: e59cbe93e7deebc4184f5bf4258048a3, type: 2}
 --- !u!114 &2933482978640857890
 MonoBehaviour:
@@ -214,3 +216,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StunDuration: 1
+--- !u!114 &7768533466660068707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3055488006234484415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3ee725856f56e4b8fccef02f2b542b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
