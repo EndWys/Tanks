@@ -7,50 +7,50 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.GameCore.GamePlayModules
+namespace Assets.GameCore.GamePlayModules.TanksMechanic
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class TankMovement : CachedMonoBehaviour
     {
-        [SerializeField] private PlayerMovementSettings _moveSettings;
+        [SerializeField] private TankConfigurations _moveSettings;
 
         private Rigidbody2D _body;
-
-        private IInputSender _input;
 
         private Dictionary<ControllAction, Action> _tankMoves;
 
         private bool _isUnderControll = false;
 
+        private IInputSender _input;
+
         public void Init(IInputSender input)
         {
             _body = GetComponent<Rigidbody2D>();
 
-            _input = input;
-
-            _tankMoves = BuildTankMovesMap().ToDictionary(x => x.Key, y=> y.Value);
-
-            _input.InputAction += HandleInputAction;
+            _tankMoves = BuildTankMovesMap().ToDictionary(x => x.Key, y => y.Value);
 
             _isUnderControll = true;
+
+            _input = input;
+            _input.InputAction += HandleInputAction;
         }
 
-        public void Crash(Vector3 contactPoint, float stunDuration)
+        public void Crash(Vector3 contactPoint, float stunDuration, Action onFinish)
         {
-            StopCoroutine(LoseControll(0));
+            StopCoroutine(LoseControll(stunDuration, onFinish));
 
             Vector3 repulsionDirection = (contactPoint - CachedTransform.position).normalized;
 
             _body.AddForce(repulsionDirection * -_moveSettings.CrashForce, ForceMode2D.Impulse);
 
-            StartCoroutine(LoseControll(stunDuration));
+            StartCoroutine(LoseControll(stunDuration, onFinish));
         }
 
-        private IEnumerator LoseControll(float stunDuration)
+        private IEnumerator LoseControll(float stunDuration, Action onFinish)
         {
             _isUnderControll = false;
             yield return new WaitForSeconds(stunDuration);
             _isUnderControll = true;
+            onFinish.Invoke();
         }
 
         private void HandleInputAction(ControllAction actionType)

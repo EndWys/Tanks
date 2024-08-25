@@ -1,4 +1,4 @@
-using Assets.GameCore.GamePlayModules;
+using Assets.GameCore.GamePlayModules.TanksMechanic;
 using Assets.GameCore.GameRunningModules;
 using System;
 using UnityEngine;
@@ -17,14 +17,9 @@ namespace Assets.GameCore.GameInputSystem
 
         private IGameTicker _ticker;
 
-        [Inject]
-        public PlayerTankControlInput(IGameTicker ticker)
+        public void Init(IGameTicker ticker)
         {
             _ticker = ticker;
-        }
-
-        public void Init()
-        {
             _ticker.OnTick += EveryTickAction;
         }
 

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76b83a0433c49ce4faac831e3f1ba4db, type: 3}
-  m_Name: Player Movement Settings
+  m_Script: {fileID: 11500000, guid: 6605d568f64ea434ba61b87d26dba144, type: 3}
+  m_Name: Enemy Tank Configurations 1
   m_EditorClassIdentifier: 
-  MoveSpeed: 4
-  RotateSpeed: 80
-  CrashForce: 10
+  MoveSpeed: 2
+  RotateSpeed: 40
+  CrashForce: 5
