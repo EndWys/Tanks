@@ -102,14 +102,13 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
 
             Physics2D.Raycast(transform.position, direction, new(), hits);
 
+            BulletTarget bulletTarget = null;
             Vector3 bulletTargetPos = transform.position + direction * Bullet.MAX_BULLET_DISTANCE;
 
-            BulletTarget bulletTarget = null;
-
-            if (TryToFindBulletTarget(hits, out BulletTarget target))
+            if (TryToFindBulletTarget(hits, out BulletTarget target, out Vector3 hitPoint))
             {
                 bulletTarget = target;
-                bulletTargetPos = target.CachedTransform.position;
+                bulletTargetPos = hitPoint;
             }
 
             bullet.Init(bulletTargetPos);
@@ -123,7 +122,7 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
             bullet.OnDestroy += _bulletPool.Release;
         }
 
-        private bool TryToFindBulletTarget(List<RaycastHit2D> hits, out BulletTarget bulletTarget)
+        private bool TryToFindBulletTarget(List<RaycastHit2D> hits, out BulletTarget bulletTarget, out Vector3 hitPoint)
         {
             foreach (RaycastHit2D hit in hits)
             {
@@ -132,11 +131,13 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic
                 if (hitObject.TryGetComponent(out BulletTarget target))
                 {
                     bulletTarget = target;
+                    hitPoint = hit.point;
                     return true;
                 }
             }
 
             bulletTarget = null;
+            hitPoint = Vector3.zero;
             return false;
         }
 
