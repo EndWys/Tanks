@@ -1,10 +1,13 @@
 using Assets.GameCore.GamePlayModules.Other.PoolingSystem;
 using Assets.GameCore.GameRunningModules;
+using Assets.GameCore.Saving;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
+using Random = UnityEngine.Random;
 
 namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 {
@@ -21,17 +24,50 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
 
         private List<BaseTankBehaviour> _activeTanks = new();
 
+        private SavingService _savingService;
+        private EnemySpawnerSaveData _saveData;
+
         [Inject]
-        private void Construct(IGameTicker gameTicker)
+        private void Construct(IGameTicker gameTicker, SavingService savingService)
         {
             _gameTicker = gameTicker;
+            _savingService = savingService;
         }
 
         public void Init()
         {
             _tanksPool.Initialize(_enemyTankPrefab);
 
-            TryToRespawnAll();
+            _saveData = _savingService.Load<EnemySpawnerSaveData>();
+
+            if (_saveData == null)
+            {
+                TryToRespawnAll();
+            }
+            else
+            {
+                LoadEnemyTanks();
+            }
+
+            StartCoroutine(SaveEverySecond());
+        }
+
+        private void TryToRespawnAll()
+        {
+            if (_activeTanks.Count == 0) StartCoroutine(StarterSpawn());
+        }
+
+        private IEnumerator StarterSpawn()
+        {
+            for (int i = 0; i < ENEMY_COUNT; i++)
+            {
+                yield return SpawnEnemy();
+            }
+        }
+
+        private bool IsAnyPossibleSpawnPoint()
+        {
+            return _spawnPoints.Any(point => point.IsFree);
         }
 
         private IEnumerator SpawnEnemy()
@@ -54,11 +90,6 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
             tank.OnDestroy += OnDestroyedTank;
         }
 
-        private bool IsAnyPossibleSpawnPoint()
-        {
-            return _spawnPoints.Any(point => point.IsFree);
-        }
-
         private void OnDestroyedTank(BaseTankBehaviour tank)
         {
             _activeTanks.Remove(tank);
@@ -66,17 +97,41 @@ namespace Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks
             TryToRespawnAll();
         }
 
-        private void TryToRespawnAll()
-        {
-            if (_activeTanks.Count == 0) StartCoroutine(StarterSpawn());
-        }
+        #region SaveLoad
 
-        private IEnumerator StarterSpawn()
+        private void LoadEnemyTanks()
         {
-            for (int i = 0; i < ENEMY_COUNT; i++)
+            foreach (var data in _saveData.EnemySaveDatas)
             {
-                yield return SpawnEnemy();
+                BaseTankBehaviour tank = _tanksPool.Collect(null, data.Position, false);
+
+                _activeTanks.Add(tank);
+                tank.Init(_gameTicker);
+                tank.OnDestroy += OnDestroyedTank;
             }
         }
+
+        private void SaveData()
+        {
+            List<EnemySaveData> enemySaves = new List<EnemySaveData>();
+
+            foreach (var tank in _activeTanks)
+            {
+                enemySaves.Add(new(tank.CachedTransform.position, tank.CachedTransform.rotation));
+            }
+
+            EnemySpawnerSaveData newSaveData = new(enemySaves.ToArray(), Guid.NewGuid());
+
+            _savingService.Save(newSaveData);
+        }
+
+        private IEnumerator SaveEverySecond()
+        {
+            yield return new WaitForSeconds(1f);
+            SaveData();
+            yield return SaveEverySecond();
+        }
+
+        #endregion
     }
 }

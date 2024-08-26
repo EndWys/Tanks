@@ -1,5 +1,6 @@
 using Assets.GameCore.GamePlayModules.PlayerLogic;
 using Assets.GameCore.GamePlayModules.TanksMechanic.EnemyTanks;
+using Assets.GameCore.Saving;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,6 +14,8 @@ namespace Assets.GameCore.GameRunningModules
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<SavingService>(Lifetime.Singleton);
+
             builder.RegisterComponent(_playerStarter);
             builder.RegisterComponent(_enemySpawner);
 
